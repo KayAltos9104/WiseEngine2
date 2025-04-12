@@ -1,6 +1,6 @@
 ﻿namespace WiseEngine2;
 
-internal class Logger
+public class Logger
 {
     private List<string> _log;
     public Logger ()

@@ -14,12 +14,10 @@ internal class Program
     {
         Scene test = new GameOfLifeScene(160, 80, 10);
         GameEngine.InitializeGraphics(1600, 800);
+        GameEngine.SceneManager.LoadScene("Game of Life", test);  
         Console.WriteLine(GameEngine.EngineLogger.GetLog());
-        while (!Raylib.WindowShouldClose())
-        {
-            test.Update();
-            GameEngine.DrawTiles(test.Tiles);
-        }
+        Console.WriteLine(GameEngine.SceneManager.SceneLogger.GetLog());
+        GameEngine.RunEngine();
         GameEngine.ShutdownGraphics();
     }   
 }

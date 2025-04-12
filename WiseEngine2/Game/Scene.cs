@@ -9,9 +9,13 @@ public abstract class Scene
     public Scene ()
     {
         GameObjects = new List<GameObject> ();
-
     }
 
-    public abstract void Update ();
-        
+    public virtual void Update()
+    {
+        foreach (GameObject obj in GameObjects)
+        {
+            obj.Update();
+        }
+    }
 }

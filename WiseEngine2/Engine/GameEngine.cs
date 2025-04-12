@@ -1,12 +1,15 @@
 ﻿using Raylib_cs;
 using System.Runtime.CompilerServices;
+using WiseEngine2.Game;
+using static System.Net.Mime.MediaTypeNames;
 namespace WiseEngine2.Engine;
 
 internal static class GameEngine
 {
     private static bool _isInitialized = false;
 
-    public static Logger EngineLogger = new Logger();
+    public static SceneManager SceneManager { get; set; } = new SceneManager();
+    public static Logger EngineLogger { get; set; } = new Logger();
     public static void InitializeGraphics(int width = 800, int height = 600, int fps = 60, string title = "Wise Engine 2.0")
     {
         if (_isInitialized)
@@ -56,7 +59,7 @@ internal static class GameEngine
 
     public static void DrawTiles (TileMap tilemap)
     {
-        if (_isInitialized == false && tilemap.Map.Length <= 0)
+        if (_isInitialized == false || tilemap.Map.Length <= 0)
         {
             return;
         }
@@ -74,5 +77,19 @@ internal static class GameEngine
                     );
             }
         Raylib.EndDrawing();
+    }
+
+    public static void RunEngine ()
+    {
+        while (!Raylib.WindowShouldClose())
+        {
+            var currentScene = SceneManager.GetCurrentScene();
+            if (currentScene != null)
+            {
+                currentScene.Update();
+                if (currentScene.GameObjects.Count > 0) DrawObjects(currentScene.GameObjects);
+                if (currentScene.Tiles is not null) DrawTiles(currentScene.Tiles);                
+            } 
+        }
     }
 }
